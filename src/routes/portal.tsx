@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/portal")({
   component: GuestPortal,
 });
 
