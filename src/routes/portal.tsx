@@ -27,10 +27,10 @@ function useCountdown(target: number) {
 
 
 function QRGrid() {
-  const cells = useMemo(
-    () => Array.from({ length: 64 }, () => Math.random() > 0.6),
-    [],
-  );
+  const [cells, setCells] = useState<boolean[]>(() => Array(64).fill(false));
+  useEffect(() => {
+    setCells(Array.from({ length: 64 }, () => Math.random() > 0.6));
+  }, []);
   return (
     <div className="w-full h-full opacity-10 absolute inset-0 grid grid-cols-8 grid-rows-8 gap-1 p-2">
       {cells.map((on, i) => (
@@ -39,6 +39,7 @@ function QRGrid() {
     </div>
   );
 }
+
 
 function GuestPortal() {
   const target = useMemo(() => new Date("2026-10-25T16:30:00").getTime(), []);
