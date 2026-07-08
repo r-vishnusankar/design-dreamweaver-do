@@ -11,21 +11,20 @@ const MAP_IMG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuC1V-8gVQ7FrCcqRNoCG24tyK0XJBjp5p0N5HjwZY6Se94ZAXTxsvjNO-VoWB0aXIUUU70F0SbND3A3H7Tp5H3J5cgGbN-cAPwkx5UEwc9O0438-MOkPs2ajO0QYUmRZ-TjMDaAl3BV2E10lVYwUVnYaLGClFvLuPBvkaoZiT7IKZFQNUy0IogNpEyYkqTW5yLukgNJoXYWxzerG4PQfR2loMqEfdPn81SQC7_BBsVNnFo-qttawLfD";
 
 function useCountdown(target: number) {
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
-  const d = Math.max(0, target - now);
+  const d = now === null ? 0 : Math.max(0, target - now);
   const days = Math.floor(d / 86400000);
   const hours = Math.floor((d % 86400000) / 3600000);
   const mins = Math.floor((d % 3600000) / 60000);
-  return {
-    days: String(days).padStart(2, "0"),
-    hours: String(hours).padStart(2, "0"),
-    mins: String(mins).padStart(2, "0"),
-  };
+  const fmt = (n: number) => (now === null ? "—" : String(n).padStart(2, "0"));
+  return { days: fmt(days), hours: fmt(hours), mins: fmt(mins) };
 }
+
 
 function QRGrid() {
   const cells = useMemo(
