@@ -1,0 +1,8 @@
+# Vow & Vellum
+
+> A luxury digital wedding experience platform. Couples craft an editorial digital home for their wedding — invitations, story, RSVP, gallery, itinerary, and a guest portal.
+
+## Pages
+
+- [Home](/): Vow & Vellum atelier — philosophy, collections, and the digital wedding experience.
+- [Guest Portal](/portal): A live sample guest portal with digital guest pass, itinerary, and destination details.

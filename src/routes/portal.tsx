@@ -2,6 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
 export const Route = createFileRoute("/portal")({
+  head: () => ({
+    meta: [
+      { title: "Guest Portal | The Wedding of Arjun & Meera | Vow & Vellum" },
+      {
+        name: "description",
+        content:
+          "Your digital guest pass, itinerary, and destination details for the wedding of Arjun & Meera at Amanbagh Sanctuary, Rajasthan.",
+      },
+      { property: "og:title", content: "Guest Portal | Arjun & Meera" },
+      {
+        property: "og:description",
+        content: "Your digital guest pass, itinerary, and destination details.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/portal" },
+    ],
+    links: [{ rel: "canonical", href: "/portal" }],
+  }),
   component: GuestPortal,
 });
 
@@ -50,7 +68,7 @@ function GuestPortal() {
       {/* Top Nav */}
       <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center px-5 md:px-16 h-20">
         <div className="flex items-center gap-4">
-          <span className="material-symbols-outlined text-primary cursor-pointer">menu</span>
+          <span className="material-symbols-outlined text-primary cursor-pointer" role="button" aria-label="Open menu" tabIndex={0}>menu</span>
           <span className="font-display text-2xl md:text-3xl text-primary tracking-tight">
             Vow &amp; Vellum
           </span>
@@ -61,7 +79,7 @@ function GuestPortal() {
           <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Journey</a>
           <a className="text-primary font-bold" href="#">Portal</a>
         </div>
-        <span className="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+        <span className="material-symbols-outlined text-primary cursor-pointer" role="button" aria-label="Account" tabIndex={0}>account_circle</span>
       </nav>
 
       <main className="relative">
@@ -274,12 +292,12 @@ function GuestPortal() {
           <a className="text-on-primary/80 hover:text-tertiary-fixed-dim transition-colors" href="#">Privacy</a>
         </div>
         <div className="flex gap-4">
-          <div className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>share</span>
-          </div>
-          <div className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>mail</span>
-          </div>
+          <button type="button" aria-label="Share" className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
+            <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden="true">share</span>
+          </button>
+          <button type="button" aria-label="Email" className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
+            <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden="true">mail</span>
+          </button>
         </div>
       </footer>
 
