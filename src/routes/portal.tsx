@@ -292,12 +292,12 @@ function GuestPortal() {
           <a className="text-on-primary/80 hover:text-tertiary-fixed-dim transition-colors" href="#">Privacy</a>
         </div>
         <div className="flex gap-4">
-          <div className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>share</span>
-          </div>
-          <div className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>mail</span>
-          </div>
+          <button type="button" aria-label="Share" className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
+            <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden="true">share</span>
+          </button>
+          <button type="button" aria-label="Email" className="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:border-on-primary transition-colors cursor-pointer">
+            <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden="true">mail</span>
+          </button>
         </div>
       </footer>
 
