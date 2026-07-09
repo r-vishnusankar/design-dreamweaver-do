@@ -2,6 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
 export const Route = createFileRoute("/portal")({
+  head: () => ({
+    meta: [
+      { title: "Guest Portal | The Wedding of Arjun & Meera | Vow & Vellum" },
+      {
+        name: "description",
+        content:
+          "Your digital guest pass, itinerary, and destination details for the wedding of Arjun & Meera at Amanbagh Sanctuary, Rajasthan.",
+      },
+      { property: "og:title", content: "Guest Portal | Arjun & Meera" },
+      {
+        property: "og:description",
+        content: "Your digital guest pass, itinerary, and destination details.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/portal" },
+    ],
+    links: [{ rel: "canonical", href: "/portal" }],
+  }),
   component: GuestPortal,
 });
 
