@@ -79,7 +79,7 @@ function GuestPortal() {
           <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">Journey</a>
           <a className="text-primary font-bold" href="#">Portal</a>
         </div>
-        <span className="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+        <span className="material-symbols-outlined text-primary cursor-pointer" role="button" aria-label="Account" tabIndex={0}>account_circle</span>
       </nav>
 
       <main className="relative">
