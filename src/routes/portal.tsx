@@ -68,7 +68,7 @@ function GuestPortal() {
       {/* Top Nav */}
       <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center px-5 md:px-16 h-20">
         <div className="flex items-center gap-4">
-          <span className="material-symbols-outlined text-primary cursor-pointer">menu</span>
+          <span className="material-symbols-outlined text-primary cursor-pointer" role="button" aria-label="Open menu" tabIndex={0}>menu</span>
           <span className="font-display text-2xl md:text-3xl text-primary tracking-tight">
             Vow &amp; Vellum
           </span>
