@@ -371,18 +371,18 @@ export const services: {
 ];
 
 /** Published invitation sites shown on the studio portfolio + phone switcher.
- * Set VITE_SAMPLE_* to public HTTPS URLs after sample apps are deployed.
- * Leave unset in production so the UI shows imagery instead of broken localhost iframes.
+ * Production defaults point at the live Netlify sample sites.
+ * Override anytime with VITE_SAMPLE_* env vars.
  */
-function sampleUrl(envValue: string | undefined) {
+function sampleUrl(envValue: string | undefined, productionFallback: string, devFallback: string) {
   const value = envValue?.trim();
-  if (!value) return "";
-  if (value.includes("localhost") || value.includes("127.0.0.1")) {
-    // Only keep localhost when the studio itself is being developed locally (Vite define).
-    if (import.meta.env.DEV) return value;
-    return "";
+  if (value) {
+    if ((value.includes("localhost") || value.includes("127.0.0.1")) && !import.meta.env.DEV) {
+      return productionFallback;
+    }
+    return value;
   }
-  return value;
+  return import.meta.env.DEV ? devFallback : productionFallback;
 }
 
 export const portfolio: PortfolioEntry[] = [
@@ -393,7 +393,11 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Essential · ₹999",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL) || (import.meta.env.DEV ? "http://localhost:5174" : ""),
+    previewUrl: sampleUrl(
+      import.meta.env.VITE_SAMPLE_INVITE_URL,
+      "https://celebrated-mandazi-4e10e4.netlify.app",
+      "http://localhost:5174",
+    ),
     featured: true,
   },
   {
@@ -403,7 +407,11 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Signature · ₹2,999 · Video",
     image:
       "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL_SIG) || (import.meta.env.DEV ? "http://localhost:3000" : ""),
+    previewUrl: sampleUrl(
+      import.meta.env.VITE_SAMPLE_INVITE_URL_SIG,
+      "https://spectacular-longma-52d6d2.netlify.app",
+      "http://localhost:3000",
+    ),
     featured: false,
   },
   {
@@ -413,7 +421,11 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Essential · ₹999",
     image:
       "https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL_B) || (import.meta.env.DEV ? "http://localhost:5175" : ""),
+    previewUrl: sampleUrl(
+      import.meta.env.VITE_SAMPLE_INVITE_URL_B,
+      "https://peppy-starlight-d3269f.netlify.app",
+      "http://localhost:5175",
+    ),
     featured: false,
   },
 ];
