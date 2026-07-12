@@ -370,7 +370,21 @@ export const services: {
   },
 ];
 
-/** Published invitation sites shown on the studio portfolio + phone switcher. */
+/** Published invitation sites shown on the studio portfolio + phone switcher.
+ * Set VITE_SAMPLE_* to public HTTPS URLs after sample apps are deployed.
+ * Leave unset in production so the UI shows imagery instead of broken localhost iframes.
+ */
+function sampleUrl(envValue: string | undefined) {
+  const value = envValue?.trim();
+  if (!value) return "";
+  if (value.includes("localhost") || value.includes("127.0.0.1")) {
+    // Only keep localhost when the studio itself is being developed locally (Vite define).
+    if (import.meta.env.DEV) return value;
+    return "";
+  }
+  return value;
+}
+
 export const portfolio: PortfolioEntry[] = [
   {
     slug: "arjun-meera",
@@ -379,7 +393,7 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Essential · ₹999",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: import.meta.env.VITE_SAMPLE_INVITE_URL ?? "http://localhost:5174",
+    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL) || (import.meta.env.DEV ? "http://localhost:5174" : ""),
     featured: true,
   },
   {
@@ -389,7 +403,7 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Signature · ₹2,999 · Video",
     image:
       "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: import.meta.env.VITE_SAMPLE_INVITE_URL_SIG ?? "http://localhost:3000",
+    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL_SIG) || (import.meta.env.DEV ? "http://localhost:3000" : ""),
     featured: false,
   },
   {
@@ -399,7 +413,7 @@ export const portfolio: PortfolioEntry[] = [
     tag: "Essential · ₹999",
     image:
       "https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80",
-    previewUrl: import.meta.env.VITE_SAMPLE_INVITE_URL_B ?? "http://localhost:5175",
+    previewUrl: sampleUrl(import.meta.env.VITE_SAMPLE_INVITE_URL_B) || (import.meta.env.DEV ? "http://localhost:5175" : ""),
     featured: false,
   },
 ];

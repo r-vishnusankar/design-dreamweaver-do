@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { portfolio } from "@/lib/site-config";
 
@@ -5,21 +6,20 @@ type PhonePreviewProps = {
   className?: string;
 };
 
-/** Prefer localhost sample URLs when browsing the studio locally. */
-function resolvePreviewUrl(configured: string | undefined, fallbackLocal: string) {
-  if (typeof window === "undefined") return configured ?? fallbackLocal;
-  const onLocalStudio =
-    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-  if (onLocalStudio) {
-    // Map known tunnel/public URLs back to local ports for reliable iframe loads
-    if (!configured) return fallbackLocal;
-    if (configured.includes("localhost") || configured.includes("127.0.0.1")) return configured;
-    // Signature sample is always the video app on 3000 when developing locally
-    if (fallbackLocal.includes("3000")) return "http://localhost:3000";
-    if (fallbackLocal.includes("5174")) return "http://localhost:5174";
-    if (fallbackLocal.includes("5175")) return "http://localhost:5175";
+function isLocalHostname(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1";
+}
+
+/** True when the URL can safely load in the phone iframe on this host. */
+function canEmbedPreview(url: string | undefined, studioIsLocal: boolean) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    if (isLocalHostname(parsed.hostname)) return studioIsLocal;
+    return parsed.protocol === "https:";
+  } catch {
+    return false;
   }
-  return configured ?? fallbackLocal;
 }
 
 export function PhonePreview({ className = "" }: PhonePreviewProps) {
@@ -31,6 +31,10 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
   const [showHint, setShowHint] = useState(true);
 
   const sample = samples[activeIndex] ?? samples[0];
+  const studioIsLocal =
+    mounted &&
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+
   const localFallback =
     sample?.slug === "arjun-meera-signature"
       ? "http://localhost:3000"
@@ -38,10 +42,21 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
         ? "http://localhost:5175"
         : "http://localhost:5174";
 
-  const baseUrl = mounted
-    ? resolvePreviewUrl(sample?.previewUrl, localFallback)
-    : (sample?.previewUrl ?? localFallback);
-  const url = baseUrl.includes("?") ? `${baseUrl}&embed=phone` : `${baseUrl}?embed=phone`;
+  const configured = sample?.previewUrl?.trim() || "";
+  const previewUrl = studioIsLocal
+    ? configured && !isLocalHostname(new URL(configured, "http://localhost").hostname)
+      ? // Prefer local ports while developing the studio
+        localFallback
+      : configured || localFallback
+    : configured;
+
+  const embeddable = mounted && canEmbedPreview(previewUrl, studioIsLocal);
+  const url =
+    embeddable && previewUrl
+      ? previewUrl.includes("?")
+        ? `${previewUrl}&embed=phone`
+        : `${previewUrl}?embed=phone`
+      : "";
 
   useEffect(() => {
     setMounted(true);
@@ -53,12 +68,11 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
     setShowHint(true);
   }, [activeIndex, url]);
 
-  // Don't leave the phone stuck on "Loading…" if the iframe never fires onLoad
   useEffect(() => {
-    if (!mounted || loaded || failed) return;
+    if (!mounted || !embeddable || loaded || failed) return;
     const t = setTimeout(() => setFailed(true), 12000);
     return () => clearTimeout(t);
-  }, [mounted, loaded, failed, url]);
+  }, [mounted, embeddable, loaded, failed, url]);
 
   useEffect(() => {
     if (!loaded) return;
@@ -135,7 +149,7 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
           </div>
 
           <div className="phone-screen relative">
-            {(!mounted || (!loaded && !failed)) && (
+            {embeddable && !loaded && !failed && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface gap-3">
                 <span className="material-symbols-outlined text-primary animate-pulse" style={{ fontSize: 28 }}>
                   smartphone
@@ -146,26 +160,47 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
               </div>
             )}
 
-            {failed && !loaded && (
+            {embeddable && failed && !loaded && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface gap-3 px-6 text-center">
                 <span className="material-symbols-outlined text-primary" style={{ fontSize: 28 }}>
                   wifi_off
                 </span>
                 <p className="text-[12px] text-on-surface-variant font-light leading-relaxed">
-                  Preview couldn&apos;t load. Open the full invite instead.
+                  Preview couldn&apos;t load right now.
                 </p>
-                <a
-                  href={baseUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/inquiry"
                   className="mt-1 text-[11px] font-semibold tracking-[0.18em] uppercase text-primary border-b border-primary/40 pb-0.5"
                 >
-                  Open template
-                </a>
+                  Start an inquiry
+                </Link>
               </div>
             )}
 
-            {showHint && loaded && (
+            {!embeddable && sample && (
+              <div className="absolute inset-0 z-10">
+                <img
+                  src={sample.image}
+                  alt={`${sample.title} invitation preview`}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/25 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 text-on-primary">
+                  <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-tertiary-fixed-dim">
+                    {sample.tag}
+                  </p>
+                  <p className="font-display text-[22px] leading-tight mt-1">{sample.title}</p>
+                  <Link
+                    to="/inquiry"
+                    className="mt-3 inline-block text-[10px] font-semibold tracking-[0.2em] uppercase border-b border-on-primary/40 pb-0.5"
+                  >
+                    Request this look
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {showHint && loaded && embeddable && (
               <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 pointer-events-none animate-bounce">
                 <div className="flex flex-col items-center gap-1 rounded-full bg-primary/85 px-4 py-2 text-on-primary backdrop-blur">
                   <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">Scroll inside</span>
@@ -176,9 +211,9 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
               </div>
             )}
 
-            {mounted && (
+            {embeddable && url && (
               <iframe
-                key={`${sample?.slug ?? "preview"}-${baseUrl}`}
+                key={`${sample?.slug ?? "preview"}-${url}`}
                 title={sample ? `${sample.title} — mobile preview` : "Invitation preview"}
                 src={url}
                 className="phone-iframe"
@@ -198,16 +233,12 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
       <p className="mt-6 text-center text-[12px] text-on-surface-variant font-light max-w-[280px]">
         Switch packages above — Essential ₹999 (two looks) or Signature ₹2,999.
       </p>
-      {mounted && (
-        <a
-          href={baseUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 text-[11px] font-semibold tracking-[0.18em] uppercase text-on-tertiary-container hover:text-primary transition-colors"
-        >
-          Open full screen
-        </a>
-      )}
+      <Link
+        to="/inquiry"
+        className="mt-3 text-[11px] font-semibold tracking-[0.18em] uppercase text-on-tertiary-container hover:text-primary transition-colors"
+      >
+        Inquire about this package
+      </Link>
     </div>
   );
 }
