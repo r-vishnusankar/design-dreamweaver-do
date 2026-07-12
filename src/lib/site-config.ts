@@ -7,7 +7,7 @@ import type {
 
 export const BRAND_NAME = "The Virtual Invite";
 export const BRAND_EMAIL = "hello@thevirtualinvite.com";
-export const BRAND_TAGLINE = "Beautiful invitations — printed, digital, or both.";
+export const BRAND_TAGLINE = "Beautiful digital invitations for every celebration.";
 
 /**
  * Public pricing (Netlify is internal only — never shown to customers)
@@ -77,9 +77,7 @@ export const pricingPackages: PricingPackage[] = [
     tagline: "Bespoke quote for unique celebrations",
     hostingLabel: "bespoke",
     highlights: [
-      "Tailored scope for your event",
       "Multi-language or multi-event sites",
-      "Paper + digital suite together",
       "Extra pages, integrations & features",
       "Dedicated project timeline",
       "Quote after a short discovery call",
@@ -272,7 +270,7 @@ export const pricingFeatures: PricingFeature[] = [
   },
   {
     id: "qr-code",
-    label: "QR code for print invites",
+    label: "QR code for guest sharing",
     category: "Hosting & share",
     essential: false,
     signature: true,

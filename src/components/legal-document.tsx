@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { BRAND_EMAIL, BRAND_NAME } from "@/lib/site-config";
+import { BrandMark } from "@/components/brand-mark";
+import { BRAND_EMAIL } from "@/lib/site-config";
 
 export function LegalDocument({
   eyebrow,
@@ -17,8 +18,8 @@ export function LegalDocument({
     <div className="min-h-screen bg-surface text-on-surface font-body">
       <header className="border-b border-outline-variant/40 px-5 md:px-12 py-6">
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
-          <Link to="/" className="font-display text-primary text-xl tracking-tight">
-            {BRAND_NAME}
+          <Link to="/" className="hover:opacity-90 transition-opacity">
+            <BrandMark />
           </Link>
           <Link
             to="/"

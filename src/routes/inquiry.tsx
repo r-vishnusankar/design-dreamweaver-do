@@ -9,7 +9,7 @@ export const Route = createFileRoute("/inquiry")({
       { title: `Inquiry | ${BRAND_NAME}` },
       {
         name: "description",
-        content: "Request a custom paper or digital invitation website for your celebration.",
+        content: "Request a custom digital invitation website for your celebration.",
       },
     ],
   }),

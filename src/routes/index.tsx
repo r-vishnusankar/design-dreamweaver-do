@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Fragment, useEffect, useState } from "react";
 import type { FeatureAvailability } from "@virtual-invite/types";
+import { BrandMark } from "@/components/brand-mark";
 import { openSampleInPhone, PhonePreview } from "@/components/phone-preview";
 import {
   BRAND_EMAIL,
@@ -15,16 +16,16 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Virtual Invite — Premium paper & digital invitations" },
+      { title: "The Virtual Invite — Premium digital invitations" },
       {
         name: "description",
         content:
-          "Custom invitation websites and printed stationery for weddings, save-the-dates, baby showers, and celebrations — crafted in India, shared worldwide.",
+          "Custom digital invitation websites for weddings, save-the-dates, baby showers, and celebrations — crafted in India, shared worldwide.",
       },
-      { property: "og:title", content: "The Virtual Invite — Paper & digital invitations" },
+      { property: "og:title", content: "The Virtual Invite — Digital invitations" },
       {
         property: "og:description",
-        content: "Beautiful invitations — printed, digital, or both. One studio for every occasion.",
+        content: "Beautiful digital invitations for every celebration. One studio for every occasion.",
       },
       {
         property: "og:image",
@@ -64,8 +65,8 @@ function Nav() {
       }`}
     >
       <div className="max-w-[1360px] mx-auto flex justify-between items-center px-5 md:px-12 h-20">
-        <Link to="/" className="font-display text-[22px] md:text-[26px] text-primary tracking-tight">
-          {BRAND_NAME}
+        <Link to="/" className="hover:opacity-90 transition-opacity">
+          <BrandMark />
         </Link>
         <div className="hidden md:flex gap-10 items-center text-[11px] font-semibold tracking-[0.2em] uppercase text-on-surface-variant">
           <a className="hover:text-primary transition-colors" href="#services">Services</a>
@@ -103,9 +104,8 @@ function Hero() {
           <span className="italic text-tertiary-fixed-dim">beautifully</span> shared.
         </h1>
         <p className="mt-10 max-w-xl text-surface/85 text-[17px] leading-relaxed font-light">
-          {BRAND_TAGLINE} Custom paper stationery and digital invitation websites for weddings,
-          save-the-dates, baby showers, birthdays, and every milestone — crafted in India,
-          shared worldwide.
+          {BRAND_TAGLINE} Custom digital invitation websites for weddings, save-the-dates, baby
+          showers, birthdays, and every milestone — crafted in India, shared worldwide.
         </p>
         <div className="mt-12 flex flex-wrap items-center gap-6">
           <Link
@@ -142,9 +142,9 @@ function Manifesto() {
           <span className="italic text-on-surface-variant">A bespoke invitation experience.</span>
         </h2>
         <p className="mt-10 text-[17px] md:text-[19px] leading-[1.7] text-on-surface-variant max-w-2xl mx-auto font-light">
-          Every celebration deserves a thoughtful first impression. {BRAND_NAME} designs matching
-          paper and digital invitations — the printed keepsake in hand, the beautiful link to share.
-          Weddings, baby showers, milestones: one studio, crafted around your story.
+          Every celebration deserves a thoughtful first impression. {BRAND_NAME} designs digital
+          invitation experiences — a beautiful link your guests open, scroll, and remember. Weddings,
+          baby showers, milestones: one studio, crafted around your story.
         </p>
       </div>
     </section>
@@ -167,8 +167,8 @@ function FeatureBento() {
             </h3>
           </div>
           <p className="text-on-surface-variant max-w-sm text-[15px] leading-relaxed font-light">
-            Paper stationery and custom digital invitation websites for life&apos;s
-            milestones — crafted in India, shared worldwide.
+            Custom digital invitation websites for life&apos;s milestones — crafted in India, shared
+            worldwide.
           </p>
         </div>
 
@@ -588,8 +588,8 @@ function Pricing() {
                 Need something unique?
               </h4>
               <p className="mt-2 text-on-surface-variant text-sm font-light max-w-xl">
-                {customPackage.tagline}. Multi-language sites, paper + digital suites, extra pages,
-                or anything outside the packages — we&apos;ll quote after a short call.
+                {customPackage.tagline}. Multi-language sites, extra pages, or anything outside the
+                packages — we&apos;ll quote after a short call.
               </p>
               <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-on-surface-variant font-light">
                 {customPackage.highlights.slice(0, 4).map((f) => (
@@ -716,9 +716,12 @@ function Footer() {
       <div className="max-w-[1360px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-tertiary-fixed-dim/20">
           <div className="md:col-span-5">
-            <h2 className="font-display text-[36px] md:text-[44px] leading-tight">{BRAND_NAME}</h2>
+            <h2 className="font-display text-[36px] md:text-[44px] leading-tight flex items-center gap-3">
+              <img src="/brand/tvi-mark.svg" alt="" className="h-11 w-11 rounded-[10px]" width={44} height={44} />
+              {BRAND_NAME}
+            </h2>
             <p className="mt-4 text-on-primary/70 text-[15px] leading-relaxed font-light max-w-sm">
-              Premium paper and digital invitations. Crafted in India, delivered worldwide.
+              Premium digital invitations. Crafted in India, shared worldwide.
             </p>
           </div>
           <div className="md:col-span-2">

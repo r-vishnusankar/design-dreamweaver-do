@@ -77,23 +77,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Virtual Invite — Premium paper & digital invitations" },
+      { title: "The Virtual Invite — Premium digital invitations" },
       {
         name: "description",
         content:
-          "Custom invitation websites and printed stationery for weddings, save-the-dates, baby showers, and celebrations worldwide.",
+          "Custom digital invitation websites for weddings, save-the-dates, baby showers, and celebrations worldwide.",
       },
       { property: "og:title", content: "The Virtual Invite" },
       {
         property: "og:description",
-        content: "Beautiful invitations — printed, digital, or both.",
+        content: "Beautiful digital invitations for every celebration.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
