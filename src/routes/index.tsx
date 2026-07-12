@@ -364,16 +364,16 @@ function LiveExperience() {
             <span className="italic">your guests will.</span>
           </h3>
           <p className="mt-6 text-on-surface-variant text-[16px] leading-relaxed font-light max-w-md">
-            Switch between live templates in the phone — two Essential looks and one Signature video
-            invite. Scroll inside to feel the guest experience.
+            Switch between Essential and Signature looks in the phone. Inquire to get a private
+            live preview for your celebration.
           </p>
 
           <ul className="mt-10 space-y-4">
             {[
               { icon: "swap_horiz", text: "Switch templates with the arrows above the phone" },
-              { icon: "touch_app", text: "Scroll inside the screen — it is a real live site" },
-              { icon: "timer", text: "See the countdown tick in real time" },
-              { icon: "location_on", text: "Venue, calendar & story — just like guests will see" },
+              { icon: "visibility", text: "See Essential and Signature package styles side by side" },
+              { icon: "timer", text: "Countdown, venue & story — built for every guest phone" },
+              { icon: "mail", text: "Inquire to receive a private preview link for your event" },
             ].map((item) => (
               <li key={item.text} className="flex items-start gap-4 text-on-surface-variant">
                 <span className="material-symbols-outlined text-primary shrink-0 mt-0.5" style={{ fontSize: 22 }}>
@@ -386,21 +386,16 @@ function LiveExperience() {
 
               <div className="mt-12 flex flex-wrap items-center gap-5">
             {portfolio.map((p) => (
-              <a
+              <Link
                 key={p.slug}
-                href={p.previewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                to="/inquiry"
                 className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.15em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
               >
                 {p.title}
                 <span className="text-[9px] tracking-[0.12em] text-on-surface-variant font-medium normal-case">
                   ({p.tag.split("·")[0]?.trim()})
                 </span>
-                <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
-                  open_in_new
-                </span>
-              </a>
+              </Link>
             ))}
             <Link
               to="/inquiry"
