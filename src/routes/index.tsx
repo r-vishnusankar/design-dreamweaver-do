@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Fragment, useEffect, useState } from "react";
 import type { FeatureAvailability } from "@virtual-invite/types";
-import { PhonePreview } from "@/components/phone-preview";
+import { openSampleInPhone, PhonePreview } from "@/components/phone-preview";
 import {
   BRAND_EMAIL,
   BRAND_NAME,
@@ -293,44 +293,39 @@ function Collections() {
               <span className="italic">websites.</span>
             </h3>
           </div>
-          <Link
-            to="/portal"
+          <a
+            href="#experience"
             className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
           >
-            View live sample
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>north_east</span>
-          </Link>
+            See in phone
+            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>smartphone</span>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {portfolio.map((it, i) => {
-            const live = it.previewUrl.startsWith("https://");
-            const className = "group cursor-pointer";
-            const body = (
-              <>
+          {portfolio.map((it, i) => (
+            <button
+              key={it.slug}
+              type="button"
+              onClick={() => openSampleInPhone(it.slug)}
+              className="group cursor-pointer text-left"
+            >
               <div className="relative aspect-[3/4] overflow-hidden bg-surface-container">
                 <img src={it.image} alt="" className="w-full h-full object-cover transition-transform duration-[1400ms] group-hover:scale-105" />
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-500" />
                 <span className="absolute top-4 left-4 text-[10px] font-semibold tracking-[0.25em] uppercase text-surface bg-primary/60 backdrop-blur px-3 py-1.5">
                   N°0{i + 1}
                 </span>
+                <span className="absolute bottom-4 left-4 right-4 text-[10px] font-semibold tracking-[0.2em] uppercase text-surface opacity-0 group-hover:opacity-100 transition-opacity">
+                  See in phone →
+                </span>
               </div>
               <div className="pt-5">
                 <h4 className="font-display text-primary text-[22px] leading-tight">{it.title}</h4>
                 <p className="text-on-surface-variant text-[12px] font-semibold tracking-[0.2em] uppercase mt-2">{it.tag}</p>
               </div>
-              </>
-            );
-            return live ? (
-              <a key={it.slug} href={it.previewUrl} target="_blank" rel="noopener noreferrer" className={className}>
-                {body}
-              </a>
-            ) : (
-              <Link key={it.slug} to="/inquiry" className={className}>
-                {body}
-              </Link>
-            );
-          })}
+            </button>
+          ))}
         </div>
       </div>
     </section>
@@ -364,8 +359,8 @@ function LiveExperience() {
             <span className="italic">your guests will.</span>
           </h3>
           <p className="mt-6 text-on-surface-variant text-[16px] leading-relaxed font-light max-w-md">
-            Switch between Essential and Signature looks in the phone. Inquire to get a private
-            live preview for your celebration.
+            Switch packages in the phone — Essential and Signature. Full sample links are private;
+            inquire when you want a personal preview.
           </p>
 
           <ul className="mt-10 space-y-4">
@@ -386,16 +381,17 @@ function LiveExperience() {
 
               <div className="mt-12 flex flex-wrap items-center gap-5">
             {portfolio.map((p) => (
-              <Link
+              <button
                 key={p.slug}
-                to="/inquiry"
+                type="button"
+                onClick={() => openSampleInPhone(p.slug)}
                 className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.15em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
               >
                 {p.title}
                 <span className="text-[9px] tracking-[0.12em] text-on-surface-variant font-medium normal-case">
                   ({p.tag.split("·")[0]?.trim()})
                 </span>
-              </Link>
+              </button>
             ))}
             <Link
               to="/inquiry"
@@ -737,7 +733,7 @@ function Footer() {
             <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Studio</p>
             <ul className="space-y-2 text-on-primary/80 text-[14px] font-light">
               <li><Link to="/inquiry" className="hover:text-tertiary-fixed-dim">Inquiry</Link></li>
-              <li><Link to="/portal" className="hover:text-tertiary-fixed-dim">Live sample</Link></li>
+              <li><Link to="/portal" className="hover:text-tertiary-fixed-dim">Portfolio</Link></li>
             </ul>
           </div>
           <div className="md:col-span-3">

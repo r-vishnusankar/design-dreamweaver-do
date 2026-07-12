@@ -22,6 +22,11 @@ function canEmbedPreview(url: string | undefined, studioIsLocal: boolean) {
   }
 }
 
+function indexForSlug(slug: string | null | undefined) {
+  if (!slug) return -1;
+  return portfolio.findIndex((s) => s.slug === slug);
+}
+
 export function PhonePreview({ className = "" }: PhonePreviewProps) {
   const samples = portfolio.length ? portfolio : [];
   const [activeIndex, setActiveIndex] = useState(0);
@@ -45,8 +50,7 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
   const configured = sample?.previewUrl?.trim() || "";
   const previewUrl = studioIsLocal
     ? configured && !isLocalHostname(new URL(configured, "http://localhost").hostname)
-      ? // Prefer local ports while developing the studio
-        localFallback
+      ? localFallback
       : configured || localFallback
     : configured;
 
@@ -60,6 +64,38 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
 
   useEffect(() => {
     setMounted(true);
+    if (window.location.hash === "#experience") {
+      requestAnimationFrame(() => {
+        document.getElementById("experience")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, []);
+
+  // Sync template from ?sample=slug (portfolio "See in phone")
+  useEffect(() => {
+    function selectSlug(slug: string | null | undefined) {
+      const idx = indexForSlug(slug);
+      if (idx >= 0) setActiveIndex(idx);
+    }
+
+    function applyFromLocation() {
+      const params = new URLSearchParams(window.location.search);
+      selectSlug(params.get("sample"));
+    }
+
+    applyFromLocation();
+
+    function onSelect(e: Event) {
+      const detail = (e as CustomEvent<{ slug?: string }>).detail;
+      selectSlug(detail?.slug);
+    }
+
+    window.addEventListener("popstate", applyFromLocation);
+    window.addEventListener("tvi:select-sample", onSelect as EventListener);
+    return () => {
+      window.removeEventListener("popstate", applyFromLocation);
+      window.removeEventListener("tvi:select-sample", onSelect as EventListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -82,7 +118,17 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
 
   function switchTemplate(dir: -1 | 1) {
     if (samples.length < 2) return;
-    setActiveIndex((i) => (i + dir + samples.length) % samples.length);
+    setActiveIndex((i) => {
+      const next = (i + dir + samples.length) % samples.length;
+      const slug = samples[next]?.slug;
+      if (slug && typeof window !== "undefined") {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set("sample", slug);
+        nextUrl.hash = "experience";
+        window.history.replaceState({}, "", nextUrl);
+      }
+      return next;
+    });
   }
 
   return (
@@ -127,7 +173,13 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
             <button
               key={s.slug}
               type="button"
-              onClick={() => setActiveIndex(i)}
+              onClick={() => {
+                setActiveIndex(i);
+                const nextUrl = new URL(window.location.href);
+                nextUrl.searchParams.set("sample", s.slug);
+                nextUrl.hash = "experience";
+                window.history.replaceState({}, "", nextUrl);
+              }}
               aria-label={`Show ${s.title}`}
               className={`h-1.5 rounded-full transition-all ${
                 i === activeIndex ? "w-6 bg-primary" : "w-1.5 bg-outline-variant hover:bg-primary/50"
@@ -241,4 +293,22 @@ export function PhonePreview({ className = "" }: PhonePreviewProps) {
       </Link>
     </div>
   );
+}
+
+/** Portfolio / portal: jump to phone preview for a sample (no public raw URL). */
+export function openSampleInPhone(slug: string) {
+  if (typeof window === "undefined") return;
+  const onHome = window.location.pathname === "/" || window.location.pathname === "";
+  if (!onHome) {
+    window.location.assign(`/?sample=${encodeURIComponent(slug)}#experience`);
+    return;
+  }
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set("sample", slug);
+  nextUrl.hash = "experience";
+  window.history.pushState({}, "", nextUrl);
+  window.dispatchEvent(new CustomEvent("tvi:select-sample", { detail: { slug } }));
+  requestAnimationFrame(() => {
+    document.getElementById("experience")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }

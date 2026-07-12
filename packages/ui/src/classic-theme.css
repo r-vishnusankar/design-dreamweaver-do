@@ -89,7 +89,7 @@ body {
   position: relative;
 }
 
-/* Sample watermark — protects demo templates */
+/* Sample watermark — protects demo templates (heavy, intentional) */
 .tvi-sample-watermark {
   pointer-events: none;
   position: fixed;
@@ -98,23 +98,42 @@ body {
   overflow: hidden;
 }
 
+.tvi-sample-watermark-badge {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(92, 18, 40, 0.45);
+  background: rgba(255, 252, 248, 0.88);
+  color: #5c1228;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
 .tvi-sample-watermark-pattern {
   position: absolute;
-  inset: -40%;
+  inset: -50%;
   display: flex;
   flex-wrap: wrap;
-  gap: 3.5rem 4rem;
+  gap: 2.25rem 2.75rem;
   align-content: flex-start;
   justify-content: center;
   transform: rotate(-28deg);
-  opacity: 0.08;
+  opacity: 0.22;
 }
 
 .tvi-sample-watermark-pattern span {
   font-family: system-ui, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   white-space: nowrap;
   color: #5c1228;
@@ -122,7 +141,12 @@ body {
 }
 
 html.phone-embed .tvi-sample-watermark-pattern {
-  opacity: 0.1;
+  opacity: 0.28;
+}
+
+html.phone-embed .tvi-sample-watermark-badge {
+  font-size: 0.58rem;
+  padding: 0.4rem 0.75rem;
 }
 
 

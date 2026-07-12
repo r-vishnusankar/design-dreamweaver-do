@@ -38,6 +38,11 @@ export const metadata: Metadata = {
   title: "Arjun & Meera — Wedding Invitation",
   description:
     "A Signature cinematic wedding invitation for Arjun Sharma & Meera Malhotra. Sunday, 25 October 2026 · Amanbagh, Alwar, Rajasthan.",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
+  },
   openGraph: {
     title: "Arjun & Meera — Wedding Invitation",
     description: "An interactive video invitation — open and scroll. 25 October 2026.",

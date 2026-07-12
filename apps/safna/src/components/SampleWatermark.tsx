@@ -1,11 +1,12 @@
 "use client";
 
-/** Semi-transparent SAMPLE watermark for Signature demo. */
+/** Heavy SAMPLE watermark for Signature demo. */
 export function SampleWatermark() {
   return (
     <div className="tvi-sample-watermark" aria-hidden>
+      <div className="tvi-sample-watermark-badge">SAMPLE · The Virtual Invite</div>
       <div className="tvi-sample-watermark-pattern">
-        {Array.from({ length: 24 }).map((_, i) => (
+        {Array.from({ length: 48 }).map((_, i) => (
           <span key={i}>The Virtual Invite · SAMPLE</span>
         ))}
       </div>

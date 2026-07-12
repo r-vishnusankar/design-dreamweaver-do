@@ -1,0 +1,8 @@
+﻿? Select the project you want to work with (Use arrow keys or type to search)
+> @virtual-invite/config  packages\config  --filter @virtual-invite/config 
+  @virtual-invite/invitation-kit  packages\invitation-kit  --filter 
+@virtual-invite/invitation-kit 
+  @virtual-invite/types  packages\types  --filter @virtual-invite/types 
+  @virtual-invite/ui  packages\ui  --filter @virtual-invite/ui 
+  @invitations/arjun-meera  apps\invitations\arjun-meera  --filter 
+@invitations/arjun-meera 
