@@ -1,19 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import type { FeatureAvailability } from "@virtual-invite/types";
+import { PhonePreview } from "@/components/phone-preview";
+import {
+  BRAND_EMAIL,
+  BRAND_NAME,
+  BRAND_TAGLINE,
+  portfolio,
+  pricingFeatures,
+  pricingPackages,
+  services,
+} from "@/lib/site-config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vow & Vellum — Digital wedding invitations, hand-crafted" },
+      { title: "The Virtual Invite — Premium paper & digital invitations" },
       {
         name: "description",
         content:
-          "A luxury digital home for your wedding. Editorial invitations, RSVP, story, gallery and countdown — crafted by our atelier around your love story.",
+          "Custom invitation websites and printed stationery for weddings, save-the-dates, baby showers, and celebrations — crafted in India, shared worldwide.",
       },
-      { property: "og:title", content: "Vow & Vellum — Digital wedding atelier" },
+      { property: "og:title", content: "The Virtual Invite — Paper & digital invitations" },
       {
         property: "og:description",
-        content: "One beautiful link that tells your story, welcomes your guests, and lives on as a keepsake.",
+        content: "Beautiful invitations — printed, digital, or both. One studio for every occasion.",
       },
       {
         property: "og:image",
@@ -30,22 +41,6 @@ export const Route = createFileRoute("/")({
 
 const HERO =
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80";
-const ENVELOPE =
-  "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1400&q=80";
-const RSVP =
-  "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1400&q=80";
-const STORY =
-  "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1400&q=80";
-const GALLERY =
-  "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1400&q=80";
-const COLLECTION_1 =
-  "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80";
-const COLLECTION_2 =
-  "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80";
-const COLLECTION_3 =
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80";
-const COLLECTION_4 =
-  "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80";
 
 function useScrolled(threshold = 40) {
   const [scrolled, setScrolled] = useState(false);
@@ -70,19 +65,20 @@ function Nav() {
     >
       <div className="max-w-[1360px] mx-auto flex justify-between items-center px-5 md:px-12 h-20">
         <Link to="/" className="font-display text-[22px] md:text-[26px] text-primary tracking-tight">
-          Vow <span className="text-on-tertiary-container">&amp;</span> Vellum
+          {BRAND_NAME}
         </Link>
         <div className="hidden md:flex gap-10 items-center text-[11px] font-semibold tracking-[0.2em] uppercase text-on-surface-variant">
-          <a className="hover:text-primary transition-colors" href="#atelier">The Atelier</a>
-          <a className="hover:text-primary transition-colors" href="#collections">Collections</a>
-          <a className="hover:text-primary transition-colors" href="#journey">Journey</a>
+          <a className="hover:text-primary transition-colors" href="#services">Services</a>
+          <a className="hover:text-primary transition-colors" href="#experience">Try it</a>
+          <a className="hover:text-primary transition-colors" href="#collections">Portfolio</a>
+          <a className="hover:text-primary transition-colors" href="#journey">Process</a>
           <a className="hover:text-primary transition-colors" href="#pricing">Pricing</a>
         </div>
         <Link
-          to="/portal"
+          to="/inquiry"
           className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase px-5 py-2.5 border border-primary text-primary hover:bg-primary hover:text-on-primary transition-colors"
         >
-          Preview
+          Inquiry
         </Link>
       </div>
     </nav>
@@ -99,29 +95,29 @@ function Hero() {
       <div className="relative z-10 max-w-[1360px] mx-auto w-full px-5 md:px-12 pt-32 pb-24">
         <p className="text-[11px] font-semibold tracking-[0.35em] uppercase text-surface/80 mb-8">
           <span className="inline-block w-8 h-px bg-tertiary-fixed-dim align-middle mr-3" />
-          The Digital Wedding Atelier
+          The Digital Invitation Studio
         </p>
         <h1 className="font-display text-surface leading-[1.02] tracking-tight text-[44px] sm:text-[68px] md:text-[92px] lg:text-[112px] max-w-[14ch]">
-          Your wedding,
+          Your celebration,
           <br />
-          <span className="italic text-tertiary-fixed-dim">beautifully</span> told.
+          <span className="italic text-tertiary-fixed-dim">beautifully</span> shared.
         </h1>
         <p className="mt-10 max-w-xl text-surface/85 text-[17px] leading-relaxed font-light">
-          A hand-crafted digital home for the most important day of your life —
-          editorial invitations, effortless RSVP, and a keepsake that lives on
-          long after the last dance.
+          {BRAND_TAGLINE} Custom paper stationery and digital invitation websites for weddings,
+          save-the-dates, baby showers, birthdays, and every milestone — crafted in India,
+          shared worldwide.
         </p>
         <div className="mt-12 flex flex-wrap items-center gap-6">
-          <a
-            href="#pricing"
+          <Link
+            to="/inquiry"
             className="inline-flex items-center gap-3 px-8 py-4 bg-surface text-primary text-[11px] font-semibold tracking-[0.2em] uppercase hover:bg-tertiary-fixed-dim transition-colors"
           >
-            Begin your invitation
+            Start your invitation
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
-          </a>
+          </Link>
           <div className="text-surface/80">
             <p className="text-[11px] font-semibold tracking-[0.2em] uppercase">4.9 · loved by 2,000+ couples</p>
-            <p className="text-[13px] text-surface/60 mt-1 font-light italic">From €175 · no commitment until payment</p>
+            <p className="text-[13px] text-surface/60 mt-1 font-light italic">From ₹999 · three packages to choose from</p>
           </div>
         </div>
       </div>
@@ -141,15 +137,14 @@ function Manifesto() {
           — Our philosophy —
         </p>
         <h2 className="font-display text-primary text-[32px] sm:text-[44px] md:text-[56px] leading-[1.15] tracking-tight">
-          Not an invitation.
+          Not a template.
           <br />
-          <span className="italic text-on-surface-variant">A digital home for your wedding.</span>
+          <span className="italic text-on-surface-variant">A bespoke invitation experience.</span>
         </h2>
         <p className="mt-10 text-[17px] md:text-[19px] leading-[1.7] text-on-surface-variant max-w-2xl mx-auto font-light">
-          Every couple has a story worth telling with care. Vow &amp; Vellum is a small
-          atelier of designers and writers who compose one exquisite site around yours —
-          the first impression, the story, the schedule, the memory. Not a template.
-          A keepsake.
+          Every celebration deserves a thoughtful first impression. {BRAND_NAME} designs matching
+          paper and digital invitations — the printed keepsake in hand, the beautiful link to share.
+          Weddings, baby showers, milestones: one studio, crafted around your story.
         </p>
       </div>
     </section>
@@ -158,120 +153,118 @@ function Manifesto() {
 
 function FeatureBento() {
   return (
-    <section id="atelier" className="pb-32 md:pb-48 px-5 md:px-12 bg-surface">
+    <section id="services" className="pb-32 md:pb-48 px-5 md:px-12 bg-surface">
       <div className="max-w-[1360px] mx-auto">
         <div className="flex items-end justify-between mb-12 md:mb-16 gap-8 flex-wrap">
           <div>
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-4">
-              What we craft
+              Our services
             </p>
             <h3 className="font-display text-primary text-[32px] md:text-[48px] leading-[1.1] tracking-tight max-w-2xl">
-              Every detail, considered.
+              Every occasion,
+              <br />
+              <span className="italic">beautifully invited.</span>
             </h3>
           </div>
           <p className="text-on-surface-variant max-w-sm text-[15px] leading-relaxed font-light">
-            Ten included features, hand-composed. One beautiful link, ready
-            to share the moment you say yes.
+            Paper stationery and custom digital invitation websites for life&apos;s
+            milestones — crafted in India, shared worldwide.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
-          {/* Envelope — tall */}
-          <div className="md:col-span-3 md:row-span-2 relative overflow-hidden group aspect-[4/5] md:aspect-auto md:min-h-[640px] bg-secondary-container">
-            <img src={ENVELOPE} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-3">01 — Arrival</p>
-              <h4 className="font-display text-surface text-[26px] md:text-[34px] leading-tight">
-                Personalised envelope,
-                <br />
-                <span className="italic">unsealed with a gesture.</span>
-              </h4>
-              <p className="text-surface/80 mt-4 text-[14px] leading-relaxed font-light max-w-md">
-                Your initials, wax-sealed. A tactile opening animation that
-                sets the tone before a single word is read.
-              </p>
-            </div>
-          </div>
-
-          {/* RSVP */}
-          <div className="md:col-span-3 relative overflow-hidden group aspect-[16/10] bg-surface-container">
-            <img src={RSVP} alt="" className="absolute inset-0 w-full h-full object-cover opacity-70 transition-transform duration-[1200ms] group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/70 to-transparent" />
-            <div className="relative p-8 md:p-10 h-full flex flex-col justify-end">
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-3">02 — Guests</p>
-              <h4 className="font-display text-primary text-[24px] md:text-[30px] leading-tight max-w-md">
-                RSVP &amp; guest tracking, <span className="italic">quietly effortless.</span>
-              </h4>
-              <p className="text-on-surface-variant mt-3 text-[14px] leading-relaxed font-light max-w-md">
-                A personal panel for every guest. Dietary notes, messages,
-                exports — kept out of your way until you need them.
-              </p>
-            </div>
-          </div>
-
-          {/* Story */}
-          <div className="md:col-span-3 relative overflow-hidden group aspect-[16/10] bg-primary text-on-primary">
-            <img src={STORY} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-[1200ms] group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/70" />
-            <div className="relative p-8 md:p-10 h-full flex flex-col justify-end">
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-3">03 — Story</p>
-              <h4 className="font-display text-[24px] md:text-[30px] leading-tight max-w-md">
-                A love story, <span className="italic">written to be re-read.</span>
-              </h4>
-              <p className="text-on-primary/80 mt-3 text-[14px] leading-relaxed font-light max-w-md">
-                We interview you like an editorial. The result reads like
-                a magazine feature — because it should.
-              </p>
-            </div>
-          </div>
-
-          {/* Gallery */}
-          <div className="md:col-span-2 bg-secondary-container p-8 md:p-10 flex flex-col justify-between min-h-[260px]">
-            <span className="material-symbols-outlined text-primary" style={{ fontSize: 32 }}>photo_library</span>
-            <div>
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-2">04</p>
-              <h4 className="font-display text-primary text-[22px] leading-tight">Gallery</h4>
-              <p className="text-on-surface-variant text-[13px] mt-2 font-light">Curated moments in editorial layouts.</p>
-            </div>
-          </div>
-
-          <div className="md:col-span-2 bg-surface-container p-8 md:p-10 flex flex-col justify-between min-h-[260px]">
-            <span className="material-symbols-outlined text-primary" style={{ fontSize: 32 }}>schedule</span>
-            <div>
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-2">05</p>
-              <h4 className="font-display text-primary text-[22px] leading-tight">Countdown &amp; itinerary</h4>
-              <p className="text-on-surface-variant text-[13px] mt-2 font-light">Every event, every hour, gracefully laid.</p>
-            </div>
-          </div>
-
-          <div className="md:col-span-2 bg-primary text-on-primary p-8 md:p-10 flex flex-col justify-between min-h-[260px]">
-            <span className="material-symbols-outlined text-tertiary-fixed-dim" style={{ fontSize: 32 }}>location_on</span>
-            <div>
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-2">06</p>
-              <h4 className="font-display text-[22px] leading-tight">Destination &amp; maps</h4>
-              <p className="text-on-primary/70 text-[13px] mt-2 font-light">Illustrated venues, one-tap directions.</p>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {services.map((service, i) => {
+            const isFeatured = i === 0;
+            return (
+              <Link
+                key={service.type}
+                to="/inquiry"
+                className={`group relative flex flex-col overflow-hidden transition-colors ${
+                  isFeatured
+                    ? "sm:col-span-2 lg:col-span-2 lg:row-span-2 min-h-[360px] lg:min-h-full bg-primary text-on-primary"
+                    : i % 3 === 1
+                      ? "bg-secondary-container hover:bg-secondary-fixed min-h-[280px]"
+                      : "bg-surface-container hover:bg-surface-container-high min-h-[280px]"
+                }`}
+              >
+                {isFeatured ? (
+                  <>
+                    <img
+                      src={service.image}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/75 to-primary/35" />
+                    <div className="relative z-10 flex h-full flex-col justify-between p-8 md:p-10">
+                      <span
+                        className="material-symbols-outlined text-tertiary-fixed-dim"
+                        style={{ fontSize: 40 }}
+                      >
+                        {service.icon}
+                      </span>
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-[0.3em] uppercase mb-2 text-tertiary-fixed-dim">
+                          {String(i + 1).padStart(2, "0")}
+                        </p>
+                        <h4 className="font-display leading-tight text-[28px] md:text-[34px]">
+                          {service.title}
+                        </h4>
+                        <p className="mt-3 text-[14px] leading-relaxed font-light text-on-primary/75 max-w-md">
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="relative h-36 md:h-40 overflow-hidden shrink-0">
+                      <img
+                        src={service.image}
+                        alt=""
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
+                      <span
+                        className="material-symbols-outlined text-primary"
+                        style={{ fontSize: 28 }}
+                      >
+                        {service.icon}
+                      </span>
+                      <div className="mt-6">
+                        <p className="text-[10px] font-semibold tracking-[0.3em] uppercase mb-2 text-on-tertiary-container">
+                          {String(i + 1).padStart(2, "0")}
+                        </p>
+                        <h4 className="font-display leading-tight text-[22px] text-primary">
+                          {service.title}
+                        </h4>
+                        <p className="mt-3 text-[14px] leading-relaxed font-light text-on-surface-variant">
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Included features rail */}
         <div className="mt-16 pt-10 border-t border-outline-variant/40">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-6">
-            All included, every invitation
+            Included with every digital invitation
           </p>
           <div className="flex flex-wrap gap-x-8 gap-y-3 text-on-surface-variant text-[14px] font-light">
             {[
-              "Animated envelope",
-              "Photo gallery",
-              "Multi-language",
-              "Maps & locations",
-              "Personalised RSVP",
-              "Guest tracking panel",
-              "Guest messages",
-              "Dietary notes",
-              "Export to Excel",
-              "Share via WhatsApp",
+              "Countdown & location",
+              "Beautiful templates",
+              "Private shareable link",
+              "Custom domain options",
+              "RSVP (Signature+)",
+              "Photo album (Atelier)",
+              "YouTube live (Atelier)",
+              "Music (Signature+)",
+              "WhatsApp share",
             ].map((f) => (
               <span key={f} className="inline-flex items-center gap-2">
                 <span className="text-tertiary-fixed-dim">◆</span>
@@ -286,51 +279,129 @@ function FeatureBento() {
 }
 
 function Collections() {
-  const items = [
-    { img: COLLECTION_1, name: "La Maison Dorée", tag: "Editorial · Gold" },
-    { img: COLLECTION_2, name: "Amanbagh", tag: "Destination · Rajasthan" },
-    { img: COLLECTION_3, name: "Provence", tag: "Garden · Sun-washed" },
-    { img: COLLECTION_4, name: "Nocturne", tag: "Evening · Black tie" },
-  ];
   return (
     <section id="collections" className="py-32 md:py-48 px-5 md:px-12 bg-surface-container-low">
       <div className="max-w-[1360px] mx-auto">
         <div className="flex items-end justify-between mb-16 gap-8 flex-wrap">
           <div>
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-4">
-              The collections
+              Portfolio
             </p>
             <h3 className="font-display text-primary text-[32px] md:text-[52px] leading-[1.1] tracking-tight max-w-2xl">
-              Four houses.
+              Live invitation
               <br />
-              <span className="italic">One is yours.</span>
+              <span className="italic">websites.</span>
             </h3>
           </div>
           <Link
             to="/portal"
             className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
           >
-            View a live sample
+            View live sample
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>north_east</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {items.map((it, i) => (
-            <div key={it.name} className="group cursor-pointer">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {portfolio.map((it, i) => (
+            <a
+              key={it.slug}
+              href={it.previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group cursor-pointer"
+            >
               <div className="relative aspect-[3/4] overflow-hidden bg-surface-container">
-                <img src={it.img} alt="" className="w-full h-full object-cover transition-transform duration-[1400ms] group-hover:scale-105" />
+                <img src={it.image} alt="" className="w-full h-full object-cover transition-transform duration-[1400ms] group-hover:scale-105" />
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-500" />
                 <span className="absolute top-4 left-4 text-[10px] font-semibold tracking-[0.25em] uppercase text-surface bg-primary/60 backdrop-blur px-3 py-1.5">
                   N°0{i + 1}
                 </span>
               </div>
               <div className="pt-5">
-                <h4 className="font-display text-primary text-[22px] leading-tight">{it.name}</h4>
+                <h4 className="font-display text-primary text-[22px] leading-tight">{it.title}</h4>
                 <p className="text-on-surface-variant text-[12px] font-semibold tracking-[0.2em] uppercase mt-2">{it.tag}</p>
               </div>
-            </div>
+            </a>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LiveExperience() {
+  return (
+    <section id="experience" className="py-32 md:py-48 px-5 md:px-12 bg-surface overflow-hidden">
+      <div className="max-w-[1360px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
+          <div className="relative">
+            <div
+              className="absolute -inset-10 rounded-full opacity-40 blur-3xl pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(228,194,129,0.45) 0%, rgba(78,12,33,0.12) 50%, transparent 70%)",
+              }}
+            />
+            <PhonePreview className="relative z-10" />
+          </div>
+        </div>
+
+        <div className="order-1 lg:order-2">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-4">
+            Try the experience
+          </p>
+          <h3 className="font-display text-primary text-[32px] md:text-[52px] leading-[1.1] tracking-tight max-w-lg">
+            Scroll it like
+            <br />
+            <span className="italic">your guests will.</span>
+          </h3>
+          <p className="mt-6 text-on-surface-variant text-[16px] leading-relaxed font-light max-w-md">
+            Switch between live templates in the phone — two Essential looks and one Signature video
+            invite. Scroll inside to feel the guest experience.
+          </p>
+
+          <ul className="mt-10 space-y-4">
+            {[
+              { icon: "swap_horiz", text: "Switch templates with the arrows above the phone" },
+              { icon: "touch_app", text: "Scroll inside the screen — it is a real live site" },
+              { icon: "timer", text: "See the countdown tick in real time" },
+              { icon: "location_on", text: "Venue, calendar & story — just like guests will see" },
+            ].map((item) => (
+              <li key={item.text} className="flex items-start gap-4 text-on-surface-variant">
+                <span className="material-symbols-outlined text-primary shrink-0 mt-0.5" style={{ fontSize: 22 }}>
+                  {item.icon}
+                </span>
+                <span className="text-[15px] font-light leading-relaxed">{item.text}</span>
+              </li>
+            ))}
+          </ul>
+
+              <div className="mt-12 flex flex-wrap items-center gap-5">
+            {portfolio.map((p) => (
+              <a
+                key={p.slug}
+                href={p.previewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.15em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
+              >
+                {p.title}
+                <span className="text-[9px] tracking-[0.12em] text-on-surface-variant font-medium normal-case">
+                  ({p.tag.split("·")[0]?.trim()})
+                </span>
+                <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
+                  open_in_new
+                </span>
+              </a>
+            ))}
+            <Link
+              to="/inquiry"
+              className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary hover:text-on-tertiary-container transition-colors"
+            >
+              Start yours →
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -415,54 +486,225 @@ function Testimonial() {
   );
 }
 
+function FeatureCell({ value }: { value: FeatureAvailability }) {
+  if (value === true) {
+    return (
+      <span className="material-symbols-outlined text-primary" style={{ fontSize: 20 }}>
+        check
+      </span>
+    );
+  }
+  if (value === false) {
+    return <span className="text-outline-variant/60">—</span>;
+  }
+  if (value === "partial") {
+    return <span className="text-[12px] text-on-tertiary-container font-medium">Limited</span>;
+  }
+  return <span className="text-[12px] text-on-surface-variant font-light">{value}</span>;
+}
+
 function Pricing() {
+  const fixedPackages = pricingPackages.filter((p) => p.id !== "custom");
+  const customPackage = pricingPackages.find((p) => p.id === "custom");
+  const categories = [...new Set(pricingFeatures.map((f) => f.category))];
+  const tiers: Array<"essential" | "signature" | "atelier"> = [
+    "essential",
+    "signature",
+    "atelier",
+  ];
+
   return (
     <section id="pricing" className="relative py-32 md:py-48 px-5 md:px-12 bg-surface-container-low overflow-hidden">
-      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div>
+      <div className="max-w-[1200px] mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-4">
-            Begin
+            Packages
           </p>
           <h3 className="font-display text-primary text-[36px] md:text-[56px] leading-[1.05] tracking-tight">
-            One price.
+            Three ways to
             <br />
-            <span className="italic">Everything included.</span>
+            <span className="italic">invite beautifully.</span>
           </h3>
-          <p className="mt-6 text-on-surface-variant text-[16px] leading-relaxed font-light max-w-md">
-            No add-ons, no upsells. A dedicated designer, unlimited guests,
-            and your site preserved for a lifetime.
+          <p className="mt-6 text-on-surface-variant text-[15px] font-light leading-relaxed">
+            From countdown &amp; location, to custom domain &amp; music, to a full guest experience
+            with live stream and photo album — plus custom quotes when you need more.
           </p>
         </div>
-        <div className="vellum-card p-10 md:p-12 rounded-sm shadow-2xl">
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container">
-            The Atelier Invitation
-          </p>
-          <div className="flex items-baseline gap-3 mt-4">
-            <span className="font-display text-primary text-[64px] leading-none">€175</span>
-            <span className="text-on-surface-variant text-[13px] font-light">once, forever</span>
-          </div>
-          <div className="mt-8 space-y-3 text-[14px] text-on-surface-variant font-light">
-            {[
-              "Dedicated atelier designer",
-              "Two rounds of revisions",
-              "Unlimited guests & languages",
-              "Lifetime hosting & keepsake",
-            ].map((f) => (
-              <div key={f} className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>check</span>
-                {f}
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {fixedPackages.map((pkg) => (
+            <div
+              key={pkg.id}
+              className={`vellum-card p-8 md:p-10 rounded-sm flex flex-col ${
+                pkg.featured
+                  ? "shadow-2xl border-2 border-primary/25 relative"
+                  : "shadow-[0px_4px_20px_rgba(31,31,31,0.04)]"
+              }`}
+            >
+              {pkg.featured && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-semibold tracking-[0.2em] uppercase bg-primary text-on-primary px-4 py-1">
+                  Popular
+                </span>
+              )}
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container">
+                {pkg.name}
+              </p>
+              <p className="mt-2 text-on-surface-variant text-sm font-light">{pkg.tagline}</p>
+              <div className="flex items-baseline gap-2 mt-6">
+                <span className="font-display text-primary text-[44px] md:text-[48px] leading-none">
+                  {pkg.priceLabel}
+                </span>
+                <span className="text-on-surface-variant text-[12px] font-light">once</span>
               </div>
-            ))}
+              <ul className="mt-8 space-y-3 text-[14px] text-on-surface-variant font-light flex-grow">
+                {pkg.highlights.map((f) => (
+                  <li key={f} className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary shrink-0 mt-0.5" style={{ fontSize: 18 }}>
+                      check
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/inquiry"
+                className={`mt-10 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[11px] font-semibold tracking-[0.2em] uppercase transition-colors ${
+                  pkg.featured
+                    ? "bg-primary text-on-primary hover:bg-primary/90"
+                    : "border border-primary text-primary hover:bg-primary hover:text-on-primary"
+                }`}
+              >
+                Choose {pkg.name}
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {customPackage && (
+          <div className="mt-8 vellum-card p-8 md:p-10 rounded-sm flex flex-col md:flex-row md:items-center gap-8 md:gap-12 border border-outline-variant/40">
+            <div className="flex-grow">
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container">
+                {customPackage.name}
+              </p>
+              <h4 className="font-display text-primary text-[28px] md:text-[32px] mt-2 leading-tight">
+                Need something unique?
+              </h4>
+              <p className="mt-2 text-on-surface-variant text-sm font-light max-w-xl">
+                {customPackage.tagline}. Multi-language sites, paper + digital suites, extra pages,
+                or anything outside the packages — we&apos;ll quote after a short call.
+              </p>
+              <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-on-surface-variant font-light">
+                {customPackage.highlights.slice(0, 4).map((f) => (
+                  <li key={f} className="inline-flex items-center gap-2">
+                    <span className="text-tertiary-fixed-dim">◆</span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="shrink-0 text-center md:text-right">
+              <p className="font-display text-primary text-[36px] leading-none">{customPackage.priceLabel}</p>
+              <p className="text-[12px] text-on-surface-variant font-light mt-1 mb-5">pricing on request</p>
+              <Link
+                to="/inquiry"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-on-primary text-[11px] font-semibold tracking-[0.2em] uppercase hover:bg-primary/90 transition-colors"
+              >
+                Request a custom quote
+              </Link>
+            </div>
           </div>
-          <a
-            href="#"
-            className="mt-10 w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-on-primary text-[11px] font-semibold tracking-[0.25em] uppercase hover:bg-primary/90 transition-colors"
-          >
-            Create my invitation
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
-          </a>
-          <p className="mt-4 text-[12px] text-on-surface-variant/70 text-center font-light italic">
-            No commitment until payment
+        )}
+
+        {/* Feature comparison by category */}
+        <div className="mt-24">
+          <div className="text-center mb-10">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-on-tertiary-container mb-3">
+              Compare
+            </p>
+            <h4 className="font-display text-primary text-[28px] md:text-[36px] leading-tight">
+              What&apos;s included, by category
+            </h4>
+            <p className="mt-4 md:hidden inline-flex items-center gap-2 text-[12px] text-on-surface-variant font-light">
+              <span className="material-symbols-outlined text-on-tertiary-container animate-pulse" style={{ fontSize: 18 }}>
+                swipe
+              </span>
+              Swipe sideways to see Signature &amp; Atelier
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-surface to-transparent md:hidden" />
+            <div className="pointer-events-none absolute right-2 top-1/2 z-10 -translate-y-1/2 md:hidden">
+              <span className="material-symbols-outlined text-primary/70" style={{ fontSize: 22 }}>
+                chevron_right
+              </span>
+            </div>
+            <div className="overflow-x-auto border border-outline-variant/40 bg-surface overscroll-x-contain touch-pan-x">
+            <table className="w-full min-w-[720px] text-left">
+              <thead>
+                <tr className="border-b border-outline-variant/40">
+                  <th className="p-4 md:p-5 text-[11px] font-semibold tracking-[0.2em] uppercase text-on-tertiary-container w-[40%]">
+                    Feature
+                  </th>
+                  {fixedPackages.map((pkg) => (
+                    <th
+                      key={pkg.id}
+                      className={`p-4 md:p-5 text-center text-[11px] font-semibold tracking-[0.15em] uppercase ${
+                        pkg.featured ? "text-primary bg-primary/[0.03]" : "text-on-surface-variant"
+                      }`}
+                    >
+                      {pkg.name}
+                      <span className="block mt-1 font-display text-[18px] tracking-normal normal-case font-normal">
+                        {pkg.priceLabel}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {categories.map((category) => (
+                  <Fragment key={category}>
+                    <tr className="bg-surface-container-low">
+                      <td
+                        colSpan={4}
+                        className="px-4 md:px-5 py-3 text-[11px] font-semibold tracking-[0.25em] uppercase text-on-tertiary-container"
+                      >
+                        {category}
+                      </td>
+                    </tr>
+                    {pricingFeatures
+                      .filter((f) => f.category === category)
+                      .map((feature) => (
+                        <tr
+                          key={feature.id}
+                          className="border-t border-outline-variant/25 hover:bg-surface-container-low/50"
+                        >
+                          <td className="p-4 md:p-5 text-[14px] text-on-surface font-light">
+                            {feature.label}
+                          </td>
+                          {tiers.map((tier) => {
+                            const pkg = fixedPackages.find((p) => p.id === tier);
+                            return (
+                              <td
+                                key={tier}
+                                className={`p-4 md:p-5 text-center ${
+                                  pkg?.featured ? "bg-primary/[0.03]" : ""
+                                }`}
+                              >
+                                <FeatureCell value={feature[tier]} />
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <p className="mt-3 md:hidden text-center text-[11px] text-on-surface-variant/80 font-light tracking-wide">
+            ← swipe the table to compare all packages →
           </p>
         </div>
       </div>
@@ -476,41 +718,37 @@ function Footer() {
       <div className="max-w-[1360px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-tertiary-fixed-dim/20">
           <div className="md:col-span-5">
-            <h2 className="font-display text-[36px] md:text-[44px] leading-tight">
-              Vow <span className="italic text-tertiary-fixed-dim">&amp;</span> Vellum
-            </h2>
+            <h2 className="font-display text-[36px] md:text-[44px] leading-tight">{BRAND_NAME}</h2>
             <p className="mt-4 text-on-primary/70 text-[15px] leading-relaxed font-light max-w-sm">
-              A digital wedding atelier. Composed in Paris &amp; Udaipur,
-              delivered worldwide.
+              Premium paper and digital invitations. Crafted in India, delivered worldwide.
             </p>
           </div>
           <div className="md:col-span-2">
-            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Atelier</p>
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Services</p>
             <ul className="space-y-2 text-on-primary/80 text-[14px] font-light">
-              <li><a href="#atelier" className="hover:text-tertiary-fixed-dim">Craft</a></li>
-              <li><a href="#collections" className="hover:text-tertiary-fixed-dim">Collections</a></li>
-              <li><a href="#journey" className="hover:text-tertiary-fixed-dim">Journey</a></li>
+              <li><a href="#experience" className="hover:text-tertiary-fixed-dim">Try it</a></li>
+              <li><a href="#collections" className="hover:text-tertiary-fixed-dim">Portfolio</a></li>
+              <li><a href="#journey" className="hover:text-tertiary-fixed-dim">Process</a></li>
             </ul>
           </div>
           <div className="md:col-span-2">
             <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Studio</p>
             <ul className="space-y-2 text-on-primary/80 text-[14px] font-light">
-              <li><a href="#" className="hover:text-tertiary-fixed-dim">Inquiry</a></li>
-              <li><a href="#" className="hover:text-tertiary-fixed-dim">Journal</a></li>
+              <li><Link to="/inquiry" className="hover:text-tertiary-fixed-dim">Inquiry</Link></li>
               <li><Link to="/portal" className="hover:text-tertiary-fixed-dim">Live sample</Link></li>
             </ul>
           </div>
           <div className="md:col-span-3">
-            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Correspondence</p>
-            <p className="text-on-primary/80 text-[14px] font-light">atelier@vowandvellum.com</p>
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-tertiary-fixed-dim mb-4">Contact</p>
+            <p className="text-on-primary/80 text-[14px] font-light">{BRAND_EMAIL}</p>
             <p className="text-on-primary/60 text-[13px] font-light italic mt-2">Replies within one working day.</p>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 text-[11px] tracking-[0.2em] uppercase text-on-primary/50 font-semibold">
-          <p>© 2026 Vow &amp; Vellum</p>
+          <p>© {new Date().getFullYear()} {BRAND_NAME}</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-tertiary-fixed-dim">Privacy</a>
-            <a href="#" className="hover:text-tertiary-fixed-dim">Terms</a>
+            <Link to="/privacy" className="hover:text-tertiary-fixed-dim">Privacy</Link>
+            <Link to="/terms" className="hover:text-tertiary-fixed-dim">Terms</Link>
             <a href="#" className="hover:text-tertiary-fixed-dim">Instagram</a>
           </div>
         </div>
@@ -527,6 +765,7 @@ function Landing() {
         <Hero />
         <Manifesto />
         <FeatureBento />
+        <LiveExperience />
         <Collections />
         <Journey />
         <Testimonial />

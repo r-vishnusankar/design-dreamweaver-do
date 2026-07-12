@@ -77,16 +77,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Guest Portal | The Wedding of Arjun & Meera | Vow & Vellum" },
+      { title: "The Virtual Invite — Premium paper & digital invitations" },
       {
         name: "description",
         content:
-          "Your digital guest pass, itinerary, and destination details for the wedding of Arjun & Meera at Amanbagh Sanctuary, Rajasthan.",
+          "Custom invitation websites and printed stationery for weddings, save-the-dates, baby showers, and celebrations worldwide.",
       },
-      { property: "og:title", content: "The Wedding of Arjun & Meera | Vow & Vellum" },
+      { property: "og:title", content: "The Virtual Invite" },
       {
         property: "og:description",
-        content: "Join us for the celebration — a Vow & Vellum guest portal.",
+        content: "Beautiful invitations — printed, digital, or both.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@source "./**/*";
+@source "../../../../packages/invitation-kit/src/**/*";
+@import "../../../../packages/ui/src/invite-theme.css";

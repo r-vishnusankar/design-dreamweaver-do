@@ -1,0 +1,50 @@
+{
+  "name": "arjun-meera-signature",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev",
+    "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true}); require('fs').rmSync('out',{recursive:true,force:true}); console.log('Cleared .next and out caches')\"",
+    "dev:fresh": "npm run clean && npm run dev",
+    "build": "next build",
+    "build:netlify": "next build",
+    "build:static": "set STATIC_EXPORT=1&&next build",
+    "build:fresh": "npm run clean && npm run build",
+    "start": "next start",
+    "tunnel": "cloudflared tunnel --url http://localhost:3000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.15.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "lucide-react": "^0.469.0",
+    "next": "^15.1.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.80.0",
+    "tailwind-merge": "^2.6.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.12",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.1.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0"
+  }
+}

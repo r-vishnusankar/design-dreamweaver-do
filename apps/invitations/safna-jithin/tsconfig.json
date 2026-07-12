@@ -1,0 +1,7 @@
+{
+  "extends": "@virtual-invite/config/tsconfig.base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
+}

@@ -1,17 +1,32 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "the-virtual-invite",
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/invitations/*"
+  ],
   "scripts": {
     "dev": "vite dev",
+    "dev:studio": "vite dev",
+    "dev:invitation": "npm run dev -w @invitations/arjun-meera",
+    "dev:invitation:safna": "npm run dev -w @invitations/safna-jithin",
+    "dev:invitation:signature": "npm run dev --prefix apps/safna",
+    "dev:invitations": "npm run dev -w @invitations/arjun-meera & npm run dev -w @invitations/safna-jithin",
     "build": "vite build",
+    "build:studio": "vite build",
+    "build:invitation:arjun-meera": "npm run build -w @invitations/arjun-meera",
+    "build:invitation:safna-jithin": "npm run build -w @invitations/safna-jithin",
+    "build:invitation:signature": "npm run build --prefix apps/safna",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "create-invitation": "node tooling/create-invitation/index.mjs"
   },
   "dependencies": {
+    "@virtual-invite/types": "*",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",

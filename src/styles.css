@@ -80,7 +80,8 @@ body {
   font-family: "Manrope", sans-serif;
 }
 
-.vellum-card {
+.vellum-card,
+.glass-card {
   background: rgba(252, 249, 248, 0.7);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(217, 193, 196, 0.3);
@@ -126,3 +127,129 @@ body {
 .tracking-caps {
   letter-spacing: 0.15em;
 }
+
+/* Interactive phone mockup — live invitation preview */
+.phone-frame {
+  width: min(300px, 78vw);
+  filter: drop-shadow(0 28px 48px rgba(31, 31, 31, 0.22));
+}
+
+.phone-bezel {
+  position: relative;
+  background: #1a1214;
+  border-radius: 42px;
+  padding: 12px;
+  border: 2px solid #2a1f22;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.phone-screen {
+  position: relative;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #1a1614;
+  aspect-ratio: 9 / 19.5;
+  isolation: isolate;
+}
+
+.phone-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #1a1614;
+  /* Let visitors scroll the invitation inside the phone */
+  touch-action: pan-y;
+  /* Hide scrollbar chrome — scroll still works */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.phone-iframe::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.phone-screen {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.phone-screen::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  z-index: 30;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 28px;
+  background: #1a1214;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  pointer-events: none;
+}
+
+.phone-notch-camera {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2a3540;
+  box-shadow: inset 0 0 0 2px #1a1214;
+}
+
+.phone-home-bar {
+  display: none;
+}
+
+.phone-btn {
+  position: absolute;
+  background: #2a1f22;
+  border-radius: 2px;
+}
+
+.phone-btn-silent {
+  left: -3px;
+  top: 96px;
+  width: 3px;
+  height: 28px;
+}
+
+.phone-btn-vol-up {
+  left: -3px;
+  top: 140px;
+  width: 3px;
+  height: 48px;
+}
+
+.phone-btn-vol-down {
+  left: -3px;
+  top: 198px;
+  width: 3px;
+  height: 48px;
+}
+
+.phone-btn-power {
+  right: -3px;
+  top: 160px;
+  width: 3px;
+  height: 72px;
+}
+
+@media (min-width: 768px) {
+  .phone-frame {
+    width: 320px;
+  }
+}
+

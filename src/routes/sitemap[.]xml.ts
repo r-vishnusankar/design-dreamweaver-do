@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+// Set SITE_URL in Netlify env (e.g. https://thevirtualinvite.com) after domain is live.
+const BASE_URL = process.env.SITE_URL ?? process.env.URL ?? "";
 
 interface SitemapEntry {
   path: string;
@@ -17,7 +17,10 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: async () => {
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
+          { path: "/inquiry", changefreq: "monthly", priority: "0.7" },
           { path: "/portal", changefreq: "weekly", priority: "0.8" },
+          { path: "/privacy", changefreq: "yearly", priority: "0.3" },
+          { path: "/terms", changefreq: "yearly", priority: "0.3" },
         ];
 
         const urls = entries.map((e) =>

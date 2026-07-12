@@ -1,0 +1,45 @@
+import { NextResponse } from "next/server";
+
+export interface Blessing {
+  id: string;
+  name: string;
+  message: string;
+  createdAt: string;
+}
+
+const blessings: Blessing[] = [];
+
+export async function GET() {
+  return NextResponse.json(blessings);
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { name, message } = body;
+
+    if (!name?.trim() || !message?.trim()) {
+      return NextResponse.json(
+        { error: "Name and message are required" },
+        { status: 400 }
+      );
+    }
+
+    const blessing: Blessing = {
+      id: crypto.randomUUID(),
+      name: name.trim(),
+      message: message.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    blessings.unshift(blessing);
+
+    // TODO: Persist to Supabase when configured
+    // const supabase = createClient(...)
+    // await supabase.from('blessings').insert(blessing)
+
+    return NextResponse.json(blessing, { status: 201 });
+  } catch {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+}

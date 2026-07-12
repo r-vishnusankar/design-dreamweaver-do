@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 30 8% 16%;
+    --card: 40 30% 97%;
+    --border: 35 20% 88%;
+    --gold: 43 40% 59%;
+    --sage: 100 12% 73%;
+  }
+
+  .night-mode body {
+    @apply bg-[#1A1816] text-warm-white;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-ivory text-text-primary font-body antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-gold/20 text-text-primary;
+  }
+}
+
+@layer components {
+  .chapter-container {
+    @apply relative min-h-screen w-full flex flex-col items-center justify-center px-6 py-24 md:px-12 lg:px-24;
+  }
+
+  .chapter-label {
+    @apply font-body text-xs uppercase tracking-[0.3em] text-gold mb-4;
+  }
+
+  .chapter-title {
+    @apply font-heading text-4xl md:text-5xl lg:text-6xl font-light text-text-primary leading-tight;
+  }
+
+  .chapter-subtitle {
+    @apply font-body text-text-secondary text-lg md:text-xl font-light mt-4 max-w-2xl;
+  }
+
+  .premium-card {
+    @apply bg-warm-white/80 backdrop-blur-sm border border-sand/60 rounded-sm p-8 md:p-10 shadow-soft;
+  }
+
+  .gold-divider {
+    @apply w-16 h-px bg-gold/60 mx-auto my-8;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-muted via-gold to-gold-muted bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .paper-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  .glass-card {
+    @apply bg-warm-white/40 backdrop-blur-md border border-white/60 rounded-lg shadow-soft;
+  }
+
+  .floral-divider {
+    @apply relative flex items-center justify-center gap-4 my-4;
+  }
+
+  .floral-divider::before,
+  .floral-divider::after {
+    content: "";
+    @apply h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent via-floral-blue/40 to-transparent;
+  }
+
+  .cinematic-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 248, 245, 0.12) 0%,
+      transparent 40%,
+      rgba(250, 248, 245, 0.28) 100%
+    );
+  }
+}
+
+/* Custom cursor trail - desktop only */
+@media (min-width: 1024px) {
+  .cursor-petal {
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+    width: 8px;
+    height: 8px;
+    border-radius: 50% 0 50% 50%;
+    background: rgba(184, 196, 176, 0.4);
+    transform: rotate(45deg);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Sample watermark — Signature demo */
+.tvi-sample-watermark {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  overflow: hidden;
+}
+
+.tvi-sample-watermark-pattern {
+  position: absolute;
+  inset: -40%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.5rem 4rem;
+  align-content: flex-start;
+  justify-content: center;
+  transform: rotate(-28deg);
+  opacity: 0.08;
+}
+
+.tvi-sample-watermark-pattern span {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #000;
+  user-select: none;
+}
+

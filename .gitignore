@@ -14,7 +14,14 @@ dist-ssr
 .vinxi
 .tanstack/**
 .nitro
+.netlify
 *.local
+
+# Nested app build artifacts
+apps/**/node_modules
+apps/**/dist
+apps/**/.next
+apps/**/.turbo
 
 # Wrangler / Cloudflare
 .wrangler/
@@ -30,3 +37,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local backup of former nested Signature repo metadata (do not commit)
+_safna-git-backup/
+
