@@ -16,6 +16,8 @@ dist-ssr
 .nitro
 .netlify
 *.local
+.env.local
+.env.*.local
 netlify-sites.json
 
 # Nested app build artifacts

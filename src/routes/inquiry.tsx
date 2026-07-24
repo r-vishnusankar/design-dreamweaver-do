@@ -23,12 +23,12 @@ const PACKAGE_OPTIONS = pricingPackages.map((p) => ({
   label: `${p.name} — ${p.priceLabel} · ${p.tagline}`,
 }));
 
-/** Formspree endpoint from env, e.g. https://formspree.io/f/xxxxxx or just xxxxxx */
+/** Formspree endpoint from env, with production default for The Virtual Invite. */
 function formspreeEndpoint() {
   const raw = (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined)?.trim();
-  if (!raw) return "";
-  if (raw.startsWith("http")) return raw;
-  return `https://formspree.io/f/${raw}`;
+  const value = raw || "https://formspree.io/f/mykrnlnw";
+  if (value.startsWith("http")) return value;
+  return `https://formspree.io/f/${value}`;
 }
 
 type Status = "idle" | "submitting" | "success" | "error";
