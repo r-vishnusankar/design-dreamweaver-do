@@ -67,8 +67,12 @@ Deploy the `dist/` folder to Netlify. Site name convention: `tvi-<slug>`.
 
 | Variable | App | Description |
 |----------|-----|-------------|
-| `VITE_SAMPLE_INVITE_URL` | Studio | URL for portfolio live sample (e.g. `https://tvi-arjun-meera.netlify.app`) |
+| `VITE_FORMSPREE_ENDPOINT` | Studio | Formspree form URL or id for `/inquiry` (e.g. `https://formspree.io/f/xxxx` or `xxxx`) |
+| `VITE_SAMPLE_INVITE_URL` | Studio | URL for Essential sample A (phone preview iframe) |
+| `VITE_SAMPLE_INVITE_URL_SIG` | Studio | URL for Signature sample |
+| `VITE_SAMPLE_INVITE_URL_B` | Studio | URL for Essential sample B |
 | `VITE_STUDIO_URL` | Invitations | Link back to marketing site in invitation footer |
+| `SITE_URL` | Studio | Canonical site URL for sitemap (e.g. `https://virtual-invite.netlify.app`) |
 
 ## Architecture notes
 
